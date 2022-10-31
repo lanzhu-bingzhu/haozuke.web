@@ -1,0 +1,1 @@
+您的管理员信息已修改成功<?php /**PATH H:\phpstudy_pro\WWW\Level9\haozuke_test\resources\views/email/update.blade.php ENDPATH**/ ?>

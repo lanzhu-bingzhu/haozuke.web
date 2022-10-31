@@ -1,0 +1,1 @@
+您的管理员状态已被改变<?php /**PATH H:\phpstudy_pro\WWW\Level9\haozuke_test\resources\views/email/update-static.blade.php ENDPATH**/ ?>
