@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Business\FangBusiness;
 use App\Http\Requests\FangCreateRequest;
+use App\Http\Requests\FangUpdateRequest;
 use App\Models\City;
 use App\Models\Fang;
-use App\Models\Fangattr;
-use App\Models\Owner;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,9 +40,17 @@ class FangController extends Controller
      * @return void
      */
     public function create(Request $request, FangBusiness $fang) {
+        $id = $request->get('id');
+        if (!empty($id) || is_numeric($id)) {
+            $model = Fang::find($id);
+            $model->fang_config = explode(',', $model->fang_config);
+            $fang_city = City::where('pid', $model->fang_province)->get();
+            $fang_region = City::where('pid', $model->fang_region)->get();
+        }
+
         $data = $fang->relationData();
 
-        return view('fang.fang-add', ['data' => $data]);
+        return view('fang.fang-add', ['data' => $data, 'fang' => $model??null, 'city' => $fang_city??null, 'region' => $fang_region??null]);
     }
 
     /**
@@ -73,8 +80,35 @@ class FangController extends Controller
         return $this->success([], 'ok');
     }
     
-    public function update() {
+    /**
+     * 修改房源信息
+     *
+     * @param FangUpdateRequest $request
+     * @param FangBusiness $fangBusiness
+     * @param Fang $fang
+     * @return void
+     */
+    public function update(FangUpdateRequest $request, FangBusiness $fangBusiness, Fang $fang) {
+        $validated = $request->validated();
 
+        try {
+            $data = $fangBusiness->map($validated['fang_addr']);
+            // 获取经纬度
+            $validated['latitude'] = $data[0];
+            $validated['longitude'] = $data[1];
+
+            $validated['fang_config'] = implode(',', $validated['fang_config']);
+            if (!empty($validated['pic'])) {
+                // 文件上传
+                $validated['fang_pic'] =  "/upload/article/" . $request->file('fang_pic')->store('', 'fang');
+            }
+            // 修改房源信息
+            $fang->fangUpdate($validated);
+        } catch (Exception $e) {
+            return $this->fail($e->getMessage(), $e->getCode());
+        }
+
+        return $this->success();
     }
 
     /**
@@ -185,5 +219,28 @@ class FangController extends Controller
         }
 
         return view('fang.fang-chart', ['time' => $arr]);
+    }
+
+    /**
+     * 房源租出状态修改
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function status(Request $request) {
+        $id = $request->get('id');
+        if (empty($id) || !is_numeric($id)) {
+            return $this->fail('参数错误', 1001);
+        }
+
+        try {
+            $model = Fang::find($id);
+            $model->fang_status == '0'? $model->fang_status = '1': $model->fang_status = '0';
+            $model->save();
+        } catch (Exception $e) {
+            return $this->fail($e->getMessage(), $e->getCode());
+        }
+
+        return $this->success();
     }
 }

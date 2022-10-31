@@ -127,6 +127,8 @@ Route::group(['middleware' => UserCheck::class], function () {
         Route::post('fang/update', [FangController::class, 'update'])->name('fang/update');
         // 富文本编辑器上传接口
         Route::post('fang/imageUpload', [FangController::class, 'imageUpload'])->name('fang/imageUpload');
+        // 修改房源状态
+        Route::get('fang/status', [FangController::class, 'status'])->name('fang/status');
     });
 
     // 房东路由

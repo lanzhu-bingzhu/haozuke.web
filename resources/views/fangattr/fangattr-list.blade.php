@@ -43,7 +43,7 @@
                     class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除
                 </a>
                 <a href="javascript:;"
-                    onclick="fangattr_add('添加房源属性','{{route('view/fangattr-add')}}','','310')"
+                    onclick="admin_add('添加房源属性','{{route('view/fangattr-add')}}','','310')"
                     class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加房源属性
                 </a>
             </span>
@@ -75,10 +75,10 @@
                     <td>{{$val['updated_at']}}</td>
                     <td>
                         <a title="编辑" href="javascript:;"
-                            onclick="fangattr_edit('房源属性编辑','{{route('view/fangattr-add', ['id' => $val['id']])}}','{{$val['id']}}','','310')" class="ml-5" style="text-decoration:none">
+                            onclick="admin_edit('房源属性编辑','{{route('view/fangattr-add', ['id' => $val['id']])}}','{{$val['id']}}','','310')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="fangattr_del(this,'{{$val['id']}}')" class="ml-5"
+                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$val['id']}}')" class="ml-5"
                             style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
@@ -107,16 +107,16 @@
             h		弹出层高度（缺省调默认值）
         */
         /*房源-属性-添加*/
-        function fangattr_add(title, url, w, h) {
+        function admin_add(title, url, w, h) {
             layer_show(title, url, w, h);
         }
         /*房源-属性-编辑*/
-        function fangattr_edit(title, url, id, w, h) {
+        function admin_edit(title, url, id, w, h) {
             layer_show(title, url, w, h);
         }
 
         /*房源-属性-删除*/
-        function fangattr_del(obj, id) {
+        function admin_del(obj, id) {
             layer.confirm('确认要删除吗？', index => {
                 $.ajax({
                     type: 'get',

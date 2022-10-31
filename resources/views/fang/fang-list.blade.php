@@ -43,7 +43,7 @@
                     class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除
                 </a>
                 <a href="javascript:;"
-                    onclick="fangattr_add('添加房源信息','{{route('view/fang-add')}}','','560')"
+                    onclick="admin_add('添加房源信息','{{route('view/fang-add')}}','','560')"
                     class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加房源信息
                 </a>
                 <a href="{{route('view/fang-chart')}}" class="btn btn-success radius">
@@ -85,17 +85,17 @@
                     <td>{{$val['fang_direction']}}</td>
                     <td>
                         @if ($val['fang_status'] == 0)
-						<span class="label label-success radius">未租</span>
+						<span onclick="check_status_on(this, '{{$val['id']}}')" class="label label-success radius">未租</span>
                         @else
-						<span class="label label-danger radius">已租</span>
+						<span onclick="check_status_off(this, '{{$val['id']}}')" class="label label-danger radius">已租</span>
                         @endif
                     </td>
                     <td>
                         <a title="编辑" href="javascript:;"
-                            onclick="fangattr_edit('房源信息编辑','{{route('view/fang-add', ['id' => $val['id']])}}','{{$val['id']}}','','560')" class="ml-5" style="text-decoration:none">
+                            onclick="admin_edit('房源信息编辑','{{route('view/fang-add', ['id' => $val['id']])}}','{{$val['id']}}','','560')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="fangattr_del(this,'{{$val['id']}}')" class="ml-5"
+                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$val['id']}}')" class="ml-5"
                             style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
@@ -124,16 +124,16 @@
             h		弹出层高度（缺省调默认值）
         */
         /*房源-属性-添加*/
-        function fangattr_add(title, url, w, h) {
+        function admin_add(title, url, w, h) {
             layer_show(title, url, w, h);
         }
         /*房源-属性-编辑*/
-        function fangattr_edit(title, url, id, w, h) {
+        function admin_edit(title, url, id, w, h) {
             layer_show(title, url, w, h);
         }
 
         /*房源-属性-删除*/
-        function fangattr_del(obj, id) {
+        function admin_del(obj, id) {
             layer.confirm('确认要删除吗？', index => {
                 $.ajax({
                     type: 'get',
@@ -153,6 +153,45 @@
                     },
                 });
             });
+        }
+
+        /* 房源管理-列表-状态切换 */
+        function check_status_on(obj, id) {
+            layer.confirm('确认切换成已租吗？', index => {
+                $.ajax({
+                    type: "get",
+                    url: "{{route('fang/status')}}",
+                    data: { id },
+                    dataType: "json",
+                    success: res => {
+                        if (res.code == 200) {
+                            $(obj).parent().html('<span onclick="check_status_off(this, '+id+')" class="label label-danger radius">已租</span>');
+                            layer.msg('已切换！', { icon: 1, time: 2000 });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 2000 });
+                        }
+                    }
+                });
+            })
+        }
+        
+        function check_status_off(obj, id) {
+            layer.confirm('确认切换成未租吗？', index => {
+                $.ajax({
+                    type: "get",
+                    url: "{{route('fang/status')}}",
+                    data: { id },
+                    dataType: "json",
+                    success: res => {
+                        if (res.code == 200) {
+							$(obj).parent().html('<span onclick="check_status_on(this, '+id+')" class="label label-success radius">未租</span>');
+							layer.msg('已切换！', { icon: 1, time: 2000 });
+						} else {
+							layer.msg(res.msg, { icon: 2, time: 2000 });
+						}
+                    }
+                });
+            })
         }
 
         /* 房源管理-属性-批量删除 */

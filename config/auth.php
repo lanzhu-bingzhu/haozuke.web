@@ -37,13 +37,18 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'passport',
-            'provider' => 'admins',
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'apiweb' => [
+            'driver' => 'session',
+            'provider' => 'apiuser',
         ],
 
         'api' => [
             'driver' => 'passport',
-            'provider' => 'admins',
+            'provider' => 'apiuser',
             'hash' => false,
         ],
     ],
@@ -71,11 +76,10 @@ return [
             // 'model' => App\Models\User::class,
             'model' => App\Models\Admin::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'apiuser' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ApiUser::class,
+        ],
     ],
 
     /*

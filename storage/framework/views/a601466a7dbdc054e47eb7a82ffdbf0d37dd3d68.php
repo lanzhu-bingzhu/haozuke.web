@@ -35,25 +35,27 @@
 	<article class="page-container">
 		<form method="post" class="form form-horizontal" id="form-admin-role-add">
 			<input name="_token" type="hidden" value="<?php echo e(csrf_token()); ?>">
-
+			<?php if(!empty($fang)): ?>
+			<input type="hidden" name="id" value="<?php echo e($fang['id']); ?>">
+			<?php endif; ?>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房源名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_name" name="fang_name">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_name']); ?><?php endif; ?>" placeholder="" id="fang_name" name="fang_name">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房源地址：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_addr" name="fang_addr">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_addr']); ?><?php endif; ?>" placeholder="" id="fang_addr" name="fang_addr">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">小区名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_xiaoqu" name="fang_xiaoqu">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_xiaoqu']); ?><?php endif; ?>" placeholder="" id="fang_xiaoqu" name="fang_xiaoqu">
 				</div>
 			</div>
 
@@ -63,7 +65,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_province" id="province">
 							<?php $__currentLoopData = $data['city']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>"><?php echo e($val['name']); ?></option>
+								<?php if(!empty($fang) && $fang['fang_province'] == $val['id']): ?>
+								<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>" selected><?php echo e($val['name']); ?></option>
+								<?php else: ?>
+								<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>"><?php echo e($val['name']); ?></option>
+								<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 					</span>
@@ -71,14 +77,34 @@
 				<div class="formControls col-xs-8 col-sm-3">
 					<span class="select-box">
 						<select class="select" size="1" name="fang_city" id="city">
+							<?php if(!empty($fang)): ?>
+								<?php $__currentLoopData = $city; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php if($fang['fang_city'] == $val['id']): ?>
+										<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>" selected><?php echo e($val['name']); ?></option>
+									<?php else: ?>
+										<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>"><?php echo e($val['name']); ?></option>
+									<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							<?php else: ?>
 							<option value=""></option>
+							<?php endif; ?>
 						</select>
 					</span>
 				</div>
 				<div class="formControls col-xs-8 col-sm-3">
 					<span class="select-box">
 						<select class="select" size="1" name="fang_region" id="region">
+							<?php if(!empty($fang)): ?>
+								<?php $__currentLoopData = $region; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php if($fang['fang_region'] == $val['id']): ?>
+										<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>" selected><?php echo e($val['name']); ?></option>
+									<?php else: ?>
+										<option value="<?php echo e($val['id']); ?>" nid="<?php echo e($val['nid']); ?>"><?php echo e($val['name']); ?></option>
+									<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							<?php else: ?>
 							<option value=""></option>
+							<?php endif; ?>
 						</select>
 					</span>
 				</div>
@@ -87,14 +113,14 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">租金：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_rent" name="fang_rent">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_rent']); ?><?php endif; ?>" placeholder="" id="fang_rent" name="fang_rent">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">楼层：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_floor" name="fang_floor">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_floor']); ?><?php endif; ?>" placeholder="" id="fang_floor" name="fang_floor">
 				</div>
 			</div>
 
@@ -104,7 +130,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_rent_type">
 							<?php $__currentLoopData = $data['rent_type_data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php if(!empty($fang) && $fang['fang_rent_type'] == $val['id']): ?>
+									<option value="<?php echo e($val['id']); ?>" selected><?php echo e($val['name']); ?></option>
+								<?php else: ?>
+									<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 					</span>
@@ -114,21 +144,21 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几室：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_shi" name="fang_shi">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_shi']); ?><?php endif; ?>" placeholder="" id="fang_shi" name="fang_shi">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几厅：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_ting" name="fang_ting">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_ting']); ?><?php endif; ?>" placeholder="" id="fang_ting" name="fang_ting">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几卫：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_wei" name="fang_wei">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_wei']); ?><?php endif; ?>" placeholder="" id="fang_wei" name="fang_wei">
 				</div>
 			</div>
 
@@ -138,7 +168,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_direction">
 							<?php $__currentLoopData = $data['direction_data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php if(!empty($fang) && $fang['fang_direction'] == $val['id']): ?>
+								<option value="<?php echo e($val['id']); ?>" selected><?php echo e($val['name']); ?></option>
+								<?php else: ?>
+								<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 					</span>
@@ -151,7 +185,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_rent_class">
 							<?php $__currentLoopData = $data['rent_class_data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php if(!empty($fang) && $fang['fang_rent_class'] == $val['id']): ?>
+								<option value="<?php echo e($val['id']); ?>" selected><?php echo e($val['name']); ?></option>
+								<?php else: ?>
+								<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 					</span>
@@ -161,7 +199,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">建筑面积：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_build_area"
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_build_area']); ?><?php endif; ?>" placeholder="" id="fang_build_area"
 						name="fang_build_area">
 				</div>
 			</div>
@@ -169,7 +207,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">使用面积：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_using_area"
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_using_area']); ?><?php endif; ?>" placeholder="" id="fang_using_area"
 						name="fang_using_area">
 				</div>
 			</div>
@@ -177,7 +215,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">建筑年代：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_year" name="fang_year">
+					<input type="text" class="input-text" value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_year']); ?><?php endif; ?>" placeholder="" id="fang_year" name="fang_year">
 				</div>
 			</div>
 
@@ -185,10 +223,24 @@
 				<label class="form-label col-xs-4 col-sm-3">配套设施：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					<?php $__currentLoopData = $data['config_data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					<div class="check-box">
-						<input type="checkbox" id="checkbox-<?php echo e($val['id']); ?>" value="<?php echo e($val['id']); ?>" name="fang_config[]">
-						<label for="checkbox-<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></label>
-					</div>
+						<?php if(!empty($fang)): ?>
+							<?php if(in_array($val['id'], $fang['fang_config'])): ?>
+							<div class="check-box">
+								<input type="checkbox" id="checkbox-<?php echo e($val['id']); ?>" value="<?php echo e($val['id']); ?>" name="fang_config[]" checked>
+								<label for="checkbox-<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></label>
+							</div>
+							<?php else: ?>
+							<div class="check-box">
+								<input type="checkbox" id="checkbox-<?php echo e($val['id']); ?>" value="<?php echo e($val['id']); ?>" name="fang_config[]">
+								<label for="checkbox-<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></label>
+							</div>
+							<?php endif; ?>
+						<?php else: ?>
+						<div class="check-box">
+							<input type="checkbox" id="checkbox-<?php echo e($val['id']); ?>" value="<?php echo e($val['id']); ?>" name="fang_config[]">
+							<label for="checkbox-<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></label>
+						</div>
+						<?php endif; ?>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</div>
 			</div>
@@ -198,7 +250,7 @@
 				<div class="formControls col-xs-8 col-sm-9">
 					<span class="btn-upload form-group">
 						<input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1"
-							readonly>
+							readonly value="<?php if(!empty($fang)): ?><?php echo e($fang['fang_pic']); ?><?php endif; ?>">
 						<a href="javascript:void();" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i>
 							浏览文件</a>
 						<input type="file" multiple name="fang_pic" class="input-file">
@@ -212,7 +264,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_owner">
 							<?php $__currentLoopData = $data['owners']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php if(!empty($fang) && $fang['fang_owner'] == $val['id']): ?>
+								<option value="<?php echo e($val['id']); ?>" selected><?php echo e($val['name']); ?></option>
+								<?php else: ?>
+								<option value="<?php echo e($val['id']); ?>"><?php echo e($val['name']); ?></option>
+								<?php endif; ?>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 					</span>
@@ -222,21 +278,32 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">是否推荐：</label>
 				<div class="formControls col-xs-8 col-sm-9">
+					<?php if(!empty($fang)): ?>
+						<div class="radio-box">
+							<input name="is_recommend" type="radio" id="recommend-1" value="1" <?php if($fang['is_recommend'] == '1'): ?>checked <?php endif; ?>>
+							<label for="recommend-1">是</label>
+						</div>
+						<div class="radio-box">
+							<input type="radio" id="recommend-2" name="is_recommend" value="0" <?php if($fang['is_recommend'] == '0'): ?>checked <?php endif; ?>>
+							<label for="recommend-2">否</label>
+						</div>
+					<?php else: ?>
 					<div class="radio-box">
-						<input name="is_recommend" type="radio" id="sex-1" value="1" checked>
-						<label for="sex-1">是</label>
+						<input name="is_recommend" type="radio" id="recommend-1" value="1" checked>
+						<label for="recommend-1">是</label>
 					</div>
 					<div class="radio-box">
-						<input type="radio" id="sex-2" name="is_recommend" value="0">
-						<label for="sex-2">否</label>
+						<input type="radio" id="recommend-2" name="is_recommend" value="0">
+						<label for="recommend-2">否</label>
 					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房屋描述：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<textarea class="textarea" name="fang_desn" id="fang_desn" cols="30" rows="4"></textarea>
+					<textarea class="textarea" name="fang_desn" id="fang_desn" cols="30" rows="4"><?php if(!empty($fang)): ?><?php echo e($fang['fang_desn']); ?><?php endif; ?></textarea>
 				</div>
 			</div>
 
@@ -295,6 +362,10 @@
 
 		// 第一步，初始化 textarea 的值
 		$text1.val(editor.txt.html())
+
+		<?php if(!empty($fang)): ?>
+		editor.txt.html("<?php echo $fang['fang_body']; ?>");
+		<?php endif; ?>
 
 	</script>
 
@@ -400,9 +471,11 @@
 					fang_config: {
 						required: true
 					},
+					<?php if(empty($fang)): ?>
 					fang_pic: {
 						required: true
 					},
+					<?php endif; ?>
 					fang_owner: {
 						required: true,
 						number: true
@@ -436,7 +509,11 @@
 				submitHandler: function (form) {
 					$(form).ajaxSubmit({
 						type: 'POST',
+						<?php if(empty($fang)): ?>
 						url: '<?php echo e(route("fang/create")); ?>',
+						<?php else: ?>
+						url: '<?php echo e(route("fang/update")); ?>',
+						<?php endif; ?>
 						async: false,
 						success: res => {
 							if (res.code == 200) {

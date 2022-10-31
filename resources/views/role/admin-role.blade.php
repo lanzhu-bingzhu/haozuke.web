@@ -33,7 +33,7 @@
 		<div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" onclick="datadel()"
 					class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a
 					class="btn btn-primary radius" href="javascript:;"
-					onclick="admin_role_add('添加角色','{{route('view/admin/role-add')}}','800')"><i
+					onclick="admin_add('添加角色','{{route('view/admin/role-add')}}','800')"><i
 						class="Hui-iconfont">&#xe600;</i> 添加角色</a> </span> <span class="r">共有数据：<strong>54</strong>
 				条</span> </div>
 		<table class="table table-border table-bordered table-hover table-bg">
@@ -60,12 +60,12 @@
 					<td>{{$role['role_desc']}}</td>
 					<td class="f-14">
 						@if ($role['id'] != 1)
-						<a title="分配权限" href="javascript:;" onclick="admin_role_allot('权限分配', '{{route('view/admin/role-power-update', ['id' => $role['id']])}}')"
+						<a title="分配权限" href="javascript:;" onclick="admin_allot('权限分配', '{{route('view/admin/role-power-update', ['id' => $role['id']])}}')"
 							style="text-decoration:none"><i class="Hui-iconfont">&#xe61d;</i></a>
 						@endif
-						<a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','{{route('view/admin/role-add', ['id' => $role['id']])}}','{{$role['id']}}')"
+						<a title="编辑" href="javascript:;" onclick="admin_edit('角色编辑','{{route('view/admin/role-add', ['id' => $role['id']])}}','{{$role['id']}}')"
 							style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" onclick="admin_role_del(this,'{{$role['id']}}')" class="ml-5"
+						<a title="删除" href="javascript:;" onclick="admin_del(this,'{{$role['id']}}')" class="ml-5"
 							style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td>
 				</tr>
@@ -84,15 +84,15 @@
 	<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
 		/*管理员-角色-添加*/
-		function admin_role_add(title, url, w, h) {
+		function admin_add(title, url, w, h) {
 			layer_show(title, url, w, h);
 		}
 		/*管理员-角色-编辑*/
-		function admin_role_edit(title, url, id, w, h) {
+		function admin_edit(title, url, id, w, h) {
 			layer_show(title, url, w, h);
 		}
 		/*管理员-角色-删除*/
-		function admin_role_del(obj, id) {
+		function admin_del(obj, id) {
 			layer.confirm('角色删除须谨慎，确认要删除吗？', index => {
 				$.ajax({
 					type: 'GET',
@@ -111,7 +111,7 @@
 			});
 		}
 		/*管理员-角色-分配权限*/
-		function admin_role_allot(title, url, w, h) {
+		function admin_allot(title, url, w, h) {
 			layer_show(title, url, w, h);
 		}
 

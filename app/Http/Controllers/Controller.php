@@ -24,7 +24,7 @@ class Controller extends BaseController
      * @param integer $code
      * @return void
      */
-    public function success($data = [], $msg = '', $code = 200) {
+    public function success($data = [], $msg = 'ok', $code = 200) {
         return json_encode([
             'msg' => $msg,
             'code' => $code,

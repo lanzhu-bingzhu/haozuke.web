@@ -35,25 +35,27 @@
 	<article class="page-container">
 		<form method="post" class="form form-horizontal" id="form-admin-role-add">
 			<input name="_token" type="hidden" value="{{csrf_token()}}">
-
+			@if (!empty($fang))
+			<input type="hidden" name="id" value="{{$fang['id']}}">
+			@endif
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房源名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_name" name="fang_name">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_name']}}@endif" placeholder="" id="fang_name" name="fang_name">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房源地址：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_addr" name="fang_addr">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_addr']}}@endif" placeholder="" id="fang_addr" name="fang_addr">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">小区名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_xiaoqu" name="fang_xiaoqu">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_xiaoqu']}}@endif" placeholder="" id="fang_xiaoqu" name="fang_xiaoqu">
 				</div>
 			</div>
 
@@ -63,7 +65,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_province" id="province">
 							@foreach ($data['city'] as $val)
-							<option value="{{$val['id']}}" nid="{{$val['nid']}}">{{$val['name']}}</option>
+								@if (!empty($fang) && $fang['fang_province'] == $val['id'])
+								<option value="{{$val['id']}}" nid="{{$val['nid']}}" selected>{{$val['name']}}</option>
+								@else
+								<option value="{{$val['id']}}" nid="{{$val['nid']}}">{{$val['name']}}</option>
+								@endif
 							@endforeach
 						</select>
 					</span>
@@ -71,14 +77,34 @@
 				<div class="formControls col-xs-8 col-sm-3">
 					<span class="select-box">
 						<select class="select" size="1" name="fang_city" id="city">
+							@if (!empty($fang))
+								@foreach ($city as $val)
+									@if ($fang['fang_city'] == $val['id'])
+										<option value="{{$val['id']}}" nid="{{$val['nid']}}" selected>{{$val['name']}}</option>
+									@else
+										<option value="{{$val['id']}}" nid="{{$val['nid']}}">{{$val['name']}}</option>
+									@endif
+								@endforeach
+							@else
 							<option value=""></option>
+							@endif
 						</select>
 					</span>
 				</div>
 				<div class="formControls col-xs-8 col-sm-3">
 					<span class="select-box">
 						<select class="select" size="1" name="fang_region" id="region">
+							@if (!empty($fang))
+								@foreach ($region as $val)
+									@if ($fang['fang_region'] == $val['id'])
+										<option value="{{$val['id']}}" nid="{{$val['nid']}}" selected>{{$val['name']}}</option>
+									@else
+										<option value="{{$val['id']}}" nid="{{$val['nid']}}">{{$val['name']}}</option>
+									@endif
+								@endforeach
+							@else
 							<option value=""></option>
+							@endif
 						</select>
 					</span>
 				</div>
@@ -87,14 +113,14 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">租金：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_rent" name="fang_rent">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_rent']}}@endif" placeholder="" id="fang_rent" name="fang_rent">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">楼层：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_floor" name="fang_floor">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_floor']}}@endif" placeholder="" id="fang_floor" name="fang_floor">
 				</div>
 			</div>
 
@@ -104,7 +130,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_rent_type">
 							@foreach ($data['rent_type_data'] as $val)
-							<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@if (!empty($fang) && $fang['fang_rent_type'] == $val['id'])
+									<option value="{{$val['id']}}" selected>{{$val['name']}}</option>
+								@else
+									<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@endif
 							@endforeach
 						</select>
 					</span>
@@ -114,21 +144,21 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几室：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_shi" name="fang_shi">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_shi']}}@endif" placeholder="" id="fang_shi" name="fang_shi">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几厅：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_ting" name="fang_ting">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_ting']}}@endif" placeholder="" id="fang_ting" name="fang_ting">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">几卫：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_wei" name="fang_wei">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_wei']}}@endif" placeholder="" id="fang_wei" name="fang_wei">
 				</div>
 			</div>
 
@@ -138,7 +168,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_direction">
 							@foreach ($data['direction_data'] as $val)
-							<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@if (!empty($fang) && $fang['fang_direction'] == $val['id'])
+								<option value="{{$val['id']}}" selected>{{$val['name']}}</option>
+								@else
+								<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@endif
 							@endforeach
 						</select>
 					</span>
@@ -151,7 +185,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_rent_class">
 							@foreach ($data['rent_class_data'] as $val)
-							<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@if (!empty($fang) && $fang['fang_rent_class'] == $val['id'])
+								<option value="{{$val['id']}}" selected>{{$val['name']}}</option>
+								@else
+								<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@endif
 							@endforeach
 						</select>
 					</span>
@@ -161,7 +199,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">建筑面积：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_build_area"
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_build_area']}}@endif" placeholder="" id="fang_build_area"
 						name="fang_build_area">
 				</div>
 			</div>
@@ -169,7 +207,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">使用面积：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_using_area"
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_using_area']}}@endif" placeholder="" id="fang_using_area"
 						name="fang_using_area">
 				</div>
 			</div>
@@ -177,7 +215,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">建筑年代：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="fang_year" name="fang_year">
+					<input type="text" class="input-text" value="@if(!empty($fang)){{$fang['fang_year']}}@endif" placeholder="" id="fang_year" name="fang_year">
 				</div>
 			</div>
 
@@ -185,10 +223,24 @@
 				<label class="form-label col-xs-4 col-sm-3">配套设施：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					@foreach ($data['config_data'] as $val)
-					<div class="check-box">
-						<input type="checkbox" id="checkbox-{{$val['id']}}" value="{{$val['id']}}" name="fang_config[]">
-						<label for="checkbox-{{$val['id']}}">{{$val['name']}}</label>
-					</div>
+						@if (!empty($fang))
+							@if (in_array($val['id'], $fang['fang_config']))
+							<div class="check-box">
+								<input type="checkbox" id="checkbox-{{$val['id']}}" value="{{$val['id']}}" name="fang_config[]" checked>
+								<label for="checkbox-{{$val['id']}}">{{$val['name']}}</label>
+							</div>
+							@else
+							<div class="check-box">
+								<input type="checkbox" id="checkbox-{{$val['id']}}" value="{{$val['id']}}" name="fang_config[]">
+								<label for="checkbox-{{$val['id']}}">{{$val['name']}}</label>
+							</div>
+							@endif
+						@else
+						<div class="check-box">
+							<input type="checkbox" id="checkbox-{{$val['id']}}" value="{{$val['id']}}" name="fang_config[]">
+							<label for="checkbox-{{$val['id']}}">{{$val['name']}}</label>
+						</div>
+						@endif
 					@endforeach
 				</div>
 			</div>
@@ -198,7 +250,7 @@
 				<div class="formControls col-xs-8 col-sm-9">
 					<span class="btn-upload form-group">
 						<input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1"
-							readonly>
+							readonly value="@if(!empty($fang)){{$fang['fang_pic']}}@endif">
 						<a href="javascript:void();" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i>
 							浏览文件</a>
 						<input type="file" multiple name="fang_pic" class="input-file">
@@ -212,7 +264,11 @@
 					<span class="select-box">
 						<select class="select" size="1" name="fang_owner">
 							@foreach ($data['owners'] as $val)
-							<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@if (!empty($fang) && $fang['fang_owner'] == $val['id'])
+								<option value="{{$val['id']}}" selected>{{$val['name']}}</option>
+								@else
+								<option value="{{$val['id']}}">{{$val['name']}}</option>
+								@endif
 							@endforeach
 						</select>
 					</span>
@@ -222,21 +278,32 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">是否推荐：</label>
 				<div class="formControls col-xs-8 col-sm-9">
+					@if (!empty($fang))
+						<div class="radio-box">
+							<input name="is_recommend" type="radio" id="recommend-1" value="1" @if($fang['is_recommend'] == '1')checked @endif>
+							<label for="recommend-1">是</label>
+						</div>
+						<div class="radio-box">
+							<input type="radio" id="recommend-2" name="is_recommend" value="0" @if($fang['is_recommend'] == '0')checked @endif>
+							<label for="recommend-2">否</label>
+						</div>
+					@else
 					<div class="radio-box">
-						<input name="is_recommend" type="radio" id="sex-1" value="1" checked>
-						<label for="sex-1">是</label>
+						<input name="is_recommend" type="radio" id="recommend-1" value="1" checked>
+						<label for="recommend-1">是</label>
 					</div>
 					<div class="radio-box">
-						<input type="radio" id="sex-2" name="is_recommend" value="0">
-						<label for="sex-2">否</label>
+						<input type="radio" id="recommend-2" name="is_recommend" value="0">
+						<label for="recommend-2">否</label>
 					</div>
+					@endif
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-3">房屋描述：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<textarea class="textarea" name="fang_desn" id="fang_desn" cols="30" rows="4"></textarea>
+					<textarea class="textarea" name="fang_desn" id="fang_desn" cols="30" rows="4">@if(!empty($fang)){{$fang['fang_desn']}}@endif</textarea>
 				</div>
 			</div>
 
@@ -295,6 +362,10 @@
 
 		// 第一步，初始化 textarea 的值
 		$text1.val(editor.txt.html())
+
+		@if (!empty($fang))
+		editor.txt.html("{!!$fang['fang_body']!!}");
+		@endif
 
 	</script>
 
@@ -400,9 +471,11 @@
 					fang_config: {
 						required: true
 					},
+					@if (empty($fang))
 					fang_pic: {
 						required: true
 					},
+					@endif
 					fang_owner: {
 						required: true,
 						number: true
@@ -436,7 +509,11 @@
 				submitHandler: function (form) {
 					$(form).ajaxSubmit({
 						type: 'POST',
+						@if (empty($fang))
 						url: '{{route("fang/create")}}',
+						@else
+						url: '{{route("fang/update")}}',
+						@endif
 						async: false,
 						success: res => {
 							if (res.code == 200) {

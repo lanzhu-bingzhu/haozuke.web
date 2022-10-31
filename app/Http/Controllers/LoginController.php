@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Power;
 use App\Models\RolePower;
 use Illuminate\Http\Request;
@@ -62,14 +63,15 @@ class LoginController extends Controller
             return redirect(route('login'))->with('msg', '验证码错误');
         }
         // 管理员身份验证
-        $bool = Auth::attempt(['username' => $validated['username'], 'password' => $validated['password']], !empty($validated['online'])? true: false);
-        // 获取管理员身份信息
-        $user = Auth::user();
+        // $bool = Auth::guard('apiweb')->attempt(['username' => $validated['username'], 'password' => $validated['password']]);
+        $bool = Auth::attempt(['username' => $validated['username'], 'password' => $validated['password']]);
         // 登录成功
         if ($bool) {
-            // 存储管理员身份信息
-            session(['user' => $user]);
-            session(['login' => null]);
+            // 获取管理员身份信息
+            // $user = Auth::guard('apiweb')->user();
+            $user = Auth::user();
+            // 获取token
+            // $token = $user->createToken('api')->accessToken;
 
             $this->getPower($user);
 
@@ -77,8 +79,6 @@ class LoginController extends Controller
         }
         // 登陆失败
         Redis::set('login_static_' . $validated['username'], $number+1, time()+3600);
-
-        session(['login' => $validated]);
 
         return redirect(route('login'))->with('msg', '账号或密码错误');
     }

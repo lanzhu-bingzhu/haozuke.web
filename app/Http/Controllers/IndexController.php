@@ -16,6 +16,7 @@ class IndexController extends Controller
      */
     public function index() {
         $user = Auth::user();
+        // $user = Auth::guard('webapi')->user();
 
         $power = session('login_power_' . $user->username);
 
@@ -23,6 +24,6 @@ class IndexController extends Controller
 
         $role_name = Role::find($user->role_id);
 
-        return view('admin.index', ['powers' => $power, 'role_name' => $role_name]);
+        return view('admin.index', ['powers' => $power, 'role_name' => $role_name, 'user' => $user]);
     }
 }

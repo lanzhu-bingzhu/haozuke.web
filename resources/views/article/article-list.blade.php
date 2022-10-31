@@ -50,7 +50,7 @@
         </form>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                <a href="javascript:;" onclick="article_add('添加文章','{{route('view/article-add')}}','800','500')"
+                <a href="javascript:;" onclick="admin_add('添加文章','{{route('view/article-add')}}','800','500')"
                     class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加文章</a>
                 {!!$articleModel->deletesBtn('article/delete')!!}
             </span>
@@ -79,10 +79,10 @@
                     <td>{{$article->title}}</td>
                     <td>{{$article->updated_at}}</td>
                     <td class="td-manage">
-                        <a title="编辑" href="javascript:;" onclick="article_edit('文章编辑','{{route('view/article-add', ['id' => $article->id])}}','{{$article->id}}','800','500')" class="ml-5" style="text-decoration:none">
+                        <a title="编辑" href="javascript:;" onclick="admin_edit('文章编辑','{{route('view/article-add', ['id' => $article->id])}}','{{$article->id}}','800','500')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6df;</i>
                         </a>
-                        <a title="删除" href="javascript:;" onclick="article_del(this,'{{$article->id}}')" class="ml-5" style="text-decoration:none">
+                        <a title="删除" href="javascript:;" onclick="admin_del(this,'{{$article->id}}')" class="ml-5" style="text-decoration:none">
                             <i class="Hui-iconfont">&#xe6e2;</i>
                         </a>
                     </td>
@@ -113,12 +113,12 @@
             h		弹出层高度（缺省调默认值）
         */
         /*文章-增加*/
-        function article_add(title, url, w, h) {
+        function admin_add(title, url, w, h) {
             layer_show(title, url, w, h);
             // location.reload();
         }
         /*文章-删除*/
-        function article_del(obj, id) {
+        function admin_del(obj, id) {
             layer.confirm('确认要删除吗？', index => {
                 $.ajax({
                     type: 'get',
@@ -138,7 +138,7 @@
         }
 
         /*文章-编辑*/
-        function article_edit(title, url, id, w, h) {
+        function admin_edit(title, url, id, w, h) {
             layer_show(title, url, w, h);
             // location.reload();
         }
