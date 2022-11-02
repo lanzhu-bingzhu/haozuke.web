@@ -43,7 +43,7 @@
 					<i class="Hui-iconfont">&#xe6e2;</i>
 					批量删除
 				</a>
-				<a href="javascript:;" onclick="admin_permission_add('添加权限节点','<?php echo e(route('view/admin/power-add')); ?>','','310')" class="btn btn-primary radius">
+				<a href="javascript:;" onclick="admin_add('添加权限节点','<?php echo e(route('view/admin/power-add')); ?>','','310')" class="btn btn-primary radius">
 					<i class="Hui-iconfont">&#xe600;</i>
 					添加权限节点
 				</a>
@@ -71,10 +71,10 @@
 					<td style="text-align: left; padding-left: 2vw;"><?php echo e($power['html']); ?><?php echo e($power['power_name']); ?></td>
 					<td><?php echo e($power['route_name']); ?></td>
 					<td>
-						<a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','<?php echo e(route('view/admin/power-add', ['id' => $power['id']])); ?>','1','','310')" class="ml-5" style="text-decoration:none">
+						<a title="编辑" href="javascript:;" onclick="admin_edit('角色编辑','<?php echo e(route('view/admin/power-add', ['id' => $power['id']])); ?>','1','','310')" class="ml-5" style="text-decoration:none">
 							<i class="Hui-iconfont">&#xe6df;</i>
 						</a>
-						<a title="删除" href="javascript:;" onclick="admin_permission_del(this,'<?php echo e($power['id']); ?>')" class="ml-5" style="text-decoration:none">
+						<a title="删除" href="javascript:;" onclick="admin_del(this,'<?php echo e($power['id']); ?>')" class="ml-5" style="text-decoration:none">
 							<i class="Hui-iconfont">&#xe6e2;</i>
 						</a>
 					</td>
@@ -102,16 +102,16 @@
 			h		弹出层高度（缺省调默认值）
 		*/
 		/*管理员-权限-添加*/
-		function admin_permission_add(title, url, w, h) {
+		function admin_add(title, url, w, h) {
 			layer_show(title, url, w, h);
 		}
 		/*管理员-权限-编辑*/
-		function admin_permission_edit(title, url, id, w, h) {
+		function admin_edit(title, url, id, w, h) {
 			layer_show(title, url, w, h);
 		}
 
 		/*管理员-权限-删除*/
-		function admin_permission_del(obj, id) {
+		function admin_del(obj, id) {
 			layer.confirm('确认要删除吗？', index => {
 				$.ajax({
 					type: 'POST',

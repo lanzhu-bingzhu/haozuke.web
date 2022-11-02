@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\EsController as AdminEsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApiuserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\FangattrController;
 use App\Http\Controllers\FangController;
 use App\Http\Controllers\GatherController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PowerController;
 use App\Http\Controllers\RoleController;
@@ -140,6 +142,22 @@ Route::group(['middleware' => UserCheck::class], function () {
         // 房东信息删除
         Route::any('owner/delete', [OwnerController::class, 'delete'])->name('owner/delete');
     });
+
+    // 房源预约路由
+    Route::group(['prfix' => 'notice'], function () {
+        // 新增预约
+        Route::post('notice/save', [NoticeController::class, 'save'])->name('notice/create');
+        // 修改预约
+        Route::post('notice/update', [NoticeController::class, 'update'])->name('notice/update');
+        // 删除预约
+        Route::any('notice/delete', [NoticeController::class, 'delete'])->name('notice/delete');
+    });
+
+    // 接口账号列表
+    Route::group(['prfix' => 'apiuser'], function () {
+
+    });
+
     // 省市区三级联动
     Route::get('city', [FangController::class, 'city'])->name('fang/city');
 
@@ -203,6 +221,22 @@ Route::group(['middleware' => UserCheck::class], function () {
         Route::get('ownerList', [OwnerController::class, 'index'])->name('view/owner-list');
         // 房东添加
         Route::get('ownerAdd', [OwnerController::class, 'create'])->name('view/owner-add');
+
+        /**
+         * 房源预约
+         */
+        // 预约列表
+        Route::get('noticeList', [NoticeController::class, 'index'])->name('view/noticee-list');
+        // 新增预约
+        Route::get('noticeAdd', [NoticeController::class, 'create'])->name('view/notice-add');
+
+        /**
+         * 接口账号
+         */
+        // 接口账号列表
+        Route::get('apiuserList', [ApiuserController::class, 'index'])->name('view/apiuser-list');
+        // 新增接口账号
+        Route::get('apiuserAdd', [ApiuserController::class, 'create'])->name('view/apiuser-add');
     });
 });
 
