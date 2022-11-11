@@ -15,6 +15,8 @@ class CreateCollectsTable extends Migration
     {
         Schema::create('collects', function (Blueprint $table) {
             $table->id();
+            $table->integer('renting')->comment('用户id');
+            $table->integer('fang_id')->comment('房源id');
             $table->timestamps();
         });
     }

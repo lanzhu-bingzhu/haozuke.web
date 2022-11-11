@@ -65,12 +65,12 @@ class FangController extends Controller
         try {
             $data = $fang->map($validated['fang_addr']);
             // 获取经纬度
-            $validated['latitude'] = $data[0];
-            $validated['longitude'] = $data[1];
+            $validated['latitude'] = $data[1];
+            $validated['longitude'] = $data[0];
 
             $validated['fang_config'] = implode(',', $validated['fang_config']);
             // 文件上传
-            $validated['fang_pic'] =  "/upload/article/" . $request->file('fang_pic')->store('', 'fang');
+            $validated['fang_pic'] =  "/upload/fang/" . $request->file('fang_pic')->store('', 'fang');
             // 添加到数据库
             Fang::create($validated);
         } catch (Exception $e) {
@@ -94,8 +94,8 @@ class FangController extends Controller
         try {
             $data = $fangBusiness->map($validated['fang_addr']);
             // 获取经纬度
-            $validated['latitude'] = $data[0];
-            $validated['longitude'] = $data[1];
+            $validated['latitude'] = $data[1];
+            $validated['longitude'] = $data[0];
 
             $validated['fang_config'] = implode(',', $validated['fang_config']);
             if (!empty($validated['pic'])) {
