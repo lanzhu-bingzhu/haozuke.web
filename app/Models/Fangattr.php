@@ -41,4 +41,8 @@ class Fangattr extends Model
         }
         return $model->save();
     }
+
+    public function getIconAttribute($key) {
+        return config('url.domain') . $this->attributes['icon'];
+    }
 }

@@ -42,4 +42,8 @@ class Article extends Model
         $model->body = $data['body'];
         return $model->save();
     }
+
+    public function getPicAttribute($key) {
+        return config('url.domain') . substr($this->attributes['pic'], 1);
+    }
 }

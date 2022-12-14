@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function () {
 
     // 获取房源列表
     Route::get('fangs', [FangController::class, 'index']);
+    Route::get('fangs/details', [FangController::class, 'details']);
 
     // 添加用户信息
     Route::post('user/userinfo', [UserController::class, 'setUserInfo']);

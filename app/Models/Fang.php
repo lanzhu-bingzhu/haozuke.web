@@ -44,4 +44,8 @@ class Fang extends Model
 
         $model->save();
     }
+
+    public function getFangPicAttribute($key) {
+        return config('url.domain') . $this->attributes['fang_pic'];
+    }
 }
